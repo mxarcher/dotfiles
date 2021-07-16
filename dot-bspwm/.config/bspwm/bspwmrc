@@ -1,0 +1,62 @@
+#!/bin/bash
+# File              : bspwmrc
+# Author            : MXArcher Lee <mxarcherlee@gmail.com>
+# Date              : 2021-03-20
+# Last Modified Date: 2021-03-20
+# Last Modified By  : MXArcher Lee <mxarcherlee@gmail.com>
+#! /bin/sh
+
+# Keyboard Map
+pgrep -x sxhkd > /dev/null || sxhkd &
+autorandr -c --skip-options crtc
+picom -CGb &
+feh --randomize --bg-fill $HOME/wallpaper/general/* &
+mpd &
+qv2ray &
+dunst & fcitx5 &
+flameshot &
+nutstore &
+xss-lock -- i3lock-fancy-dualmonitor -f JetBrainsMono Nerd Font -p &
+nm-applet &
+sh $HOME/.config/polybar/launch.sh &
+
+# Use `localectl set-x11-keymap "" "" "" ctrl:swapcaps` to switch CapsLock and Ctrl_L
+#xmodmap $HOME/.Xmodmap & 
+
+
+bspc config border_width         3
+bspc config window_gap           12
+bspc config split_ratio		 0.52
+
+
+# bspc config focused_border_color "#bd93f9"
+
+# Colors
+bspc config normal_border_color		"#3b4252"
+bspc config focused_border_color	"#88c0d0"
+bspc config presel_feedback_color	"#88c0d0"
+
+
+# Monocle mode settings 
+bspc config borderless_monocle   true
+bspc config paddingless_monocle	 true
+bspc config gapless_monocle      true
+
+bspc config remove_disabled_monitors false
+bspc config remove_unplugged_monitors false
+bspc config merge_overlapping_monitors true
+bspc config focus_follows_pointer true
+
+# xprop | grep WM_CLASS
+bspc rule -a Netease-cloud-music-gtk desktop='^9' state=floating follow=on
+bspc rule -a Netease-cloud-music desktop='^9' state=floating follow=on
+bspc rule -a Google-chrome:* follow=on state=tiled
+bspc rule -a Vmware:* desktop='^10' follow=on
+bspc rule -a Zathura:* focus=on state=tiled
+bspc rule -a Nutstore:* focus=on state=tiled
+bspc rule -a Peek:* follow=on state=floating
+bspc rule -a Steam:* state=tiled follow=on desktop='^9'
+bspc rule -a "kitty" focus=on desktop="^2:^9"
+bspc rule -a "微信" desktop="^8" state=tiled
+bspc rule -a "qv2ray" desktop="^9" state=tiled
+bspc rule -a Screenkey manage=off
