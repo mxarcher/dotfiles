@@ -1,0 +1,21 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+	signingkey = {{ .signingkey }}
+
+[init]
+	defaultBranch = main
+[https]
+	proxy = socks5://{{ .proxy_host }}
+[http]
+	proxy = socks5://{{ .proxy_host }}
+[commit]
+	gpgsign = true
+[alias]
+	cc = cz commit
+	ck = cz check
+	cl = cz changelog
+	cv = cz version
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[core]
+	autocrlf = input

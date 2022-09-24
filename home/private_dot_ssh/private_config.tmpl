@@ -1,0 +1,6 @@
+Include conf.d/*
+
+Host github.com
+	Hostname github.com
+	User git
+	ProxyCommand ncat --proxy {{ .proxy_host }} --proxy-type socks5 %h %p

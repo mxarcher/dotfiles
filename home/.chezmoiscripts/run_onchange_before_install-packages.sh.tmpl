@@ -1,0 +1,27 @@
+{{ $sudo := "sudo" -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
+{{ if eq .osid "linux-arch" "linux-manjaro" -}}
+{{ $pkgs := list
+	"git-lfs"
+	"ripgrep"
+	"zoxide"
+	"fd"
+	"fzf"
+	"neofetch"
+	"exa" -}}
+
+{{ $update := "pacman -Syu" -}}
+{{ $install := "pacman -S --noconfirm" -}}
+
+#!/bin/bash
+set -eufo pipefail
+
+{{ $sudo }} {{ $update }}
+{{ $sudo }} {{ $install }} {{ $pkgs | join " " }}
+
+{{ end -}}
+
+

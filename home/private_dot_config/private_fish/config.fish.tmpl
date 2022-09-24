@@ -1,0 +1,57 @@
+fish_vi_key_bindings
+
+set fish_greeting
+set -a fish_user_paths ~/.local/bin
+
+set -x EDITOR nvim
+set -x MANAGER "less -R --use-color -Dd+r -Du+b"
+
+# python virtualenvwrapper
+#set -x WORKON_HOME ~/.pyvenvs
+# yarn
+#set -ax fish_user_paths (yarn global bin)
+
+# rust 
+set -x RUSTUP_DIST_SERVER https://mirrors.ustc.edu.cn/rust-static
+set -x RUSTUP_UPDATE_ROOT https://mirrors.ustc.edu.cn/rust-static/rustup
+set -ax fish_user_paths ~/.cargo/bin
+# go
+set -x GO111MODULE on
+set -x GOPROXY https://goproxy.cn
+set -x GOPATH $HOME/.golang
+set -ax fish_user_paths $HOME/.golang/bin
+
+# gpg-agent
+set -x GPG_TTY (tty)
+set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
+# gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+
+# set PROXY
+set -x http_proxy "socks5://{{ .proxy_host }}"
+set -x https_proxy "socks5://{{ .proxy_host }}"
+
+alias cz "chezmoi"
+alias cze "chezmoi edit"
+alias czc "cd (chezmoi source-path)"
+alias lg "lazygit"
+alias ls "exa --git --time-style iso"
+alias ll "ls -l "
+alias la "ll -a"
+alias lt "ll -s time"
+alias l1 "ls -1"
+alias tree "ls -T"
+alias rg "rg --smart-case"
+alias rg1="rg --maxdepth 1"
+alias rg2="rg --maxdepth 2"
+alias grep "rg"
+alias df "df -TH"
+alias ip "ip -color=auto"
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+if status --is-interactive 
+   # type -q neofetch
+   neofetch
+   zoxide init fish | source
+   rustup completions fish | source
+end
+
+

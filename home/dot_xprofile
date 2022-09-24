@@ -1,0 +1,8 @@
+# =============================================
+# 将 Caps Lock 映射为 Escape 和 Ctrl
+# 单按 Caps Lock 时为 Escape，组合键时仍为 Ctrl
+
+# 在启用之前需要先执行以下命令 
+# `localectl set-x11-keymap cn "" "" ctrl:nocaps`
+# 执行完成后就会生成 /etc/X11/xorg.conf.d/00-keyboard.conf
+xcape -e 'Control_L=Escape'
