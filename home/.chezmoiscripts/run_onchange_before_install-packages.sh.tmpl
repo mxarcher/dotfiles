@@ -1,27 +1,43 @@
-{{ $sudo := "sudo" -}}
-{{ if eq .chezmoi.username "root" -}}
-{{   $sudo = "" -}}
-{{ end -}}
-
-{{ if eq .osid "linux-arch" "linux-manjaro" -}}
-{{ $pkgs := list
-	"git-lfs"
-	"ripgrep"
-	"zoxide"
-	"fd"
-	"fzf"
-	"neofetch"
-	"exa" -}}
-
-{{ $update := "pacman -Syu" -}}
-{{ $install := "pacman -S --noconfirm" -}}
-
 #!/bin/bash
+
 set -eufo pipefail
+# 关联数组必须通过 `declare -A` 来声明
+declare -A pkg_command_map
+# key 是包的名字，value 是包的可执行的命令
+pkg_command_map=(
+	# 这里加双引号是为了避免格式化的时候给 `-` 两侧加空格
+	["git-lfs"]="git-lfs"
 
-{{ $sudo }} {{ $update }}
-{{ $sudo }} {{ $install }} {{ $pkgs | join " " }}
+	[zoxide]="zoxide"
+	[ripgrep]="rg"
+	[fd]="fd"
+	[fzf]="fzf"
+	[neofetch]="neofetch"
+	[exa]="exa"
+)
+missing_pkgs=()
+for pkg in "${!pkg_command_map[@]}"; do
+	if ! command -v "${pkg_command_map[$pkg]}" >/dev/null; then
+		missing_pkgs+=("$pkg")
+	fi
+done
 
-{{ end -}}
+if [[ ${#missing_pkgs[@]} -gt 0 ]]; then
+	# 这里需要改为 * 见 https://www.shellcheck.net/wiki/SC2145
+	echo "====== missing ${missing_pkgs[*]}"
+	install_command=()
+	# {{ if ne .chezmoi.username "root" }}
+	install_command+=(sudo)
+	# {{ end }}
 
+	# {{ if eq .osid "linux-arch" "linux-manjaro" }}
+	install_command+=(pacman)
+	"${install_command[@]}" -Syu
+	"${install_command[@]}" -S --noconfirm "${missing_pkgs[@]}"
+	# {{ else if eq .osid "linux-ubuntu" "linux-debian" }}
+	install_command+=(apt)
+	"${install_command[@]}" update
+	"${install_command[@]}" install --yes --no-install-recommends "${missing_pkgs[@]}"
+	# {{ end }}
 
+fi
