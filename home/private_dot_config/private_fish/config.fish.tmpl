@@ -27,8 +27,8 @@ set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 # gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
 
 # set PROXY
-set -x http_proxy "socks5://{{ .proxy_host }}"
-set -x https_proxy "socks5://{{ .proxy_host }}"
+set -x http_proxy "socks5://{{ .proxy.socks5 }}"
+set -x https_proxy "socks5://{{ .proxy.socks5 }}"
 
 alias cz "chezmoi"
 alias cze "chezmoi edit"
