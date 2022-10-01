@@ -1,0 +1,4 @@
+function set_proxy --description '设置代理'
+	set -gx http_proxy "socks5://{{ .proxy.socks5 }}"
+	set -gx https_proxy "socks5://{{ .proxy.socks5 }}"
+end
