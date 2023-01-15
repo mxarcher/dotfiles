@@ -9,21 +9,21 @@ set ideamarks
 set keep-english-in-normal
 set ideajoin
 set easymotion
+set quickscope
 
 " set ideastatusicon=enabled
 
 " ==================================
 " = general settings========================
 " ==================================
-nmap L $
-vmap L $
-nmap H ^
-vmap H ^
+nnoremap L $
+vnoremap L $
+nnoremap H ^
+vnoremap H ^
 
 " 在DistractionFreeMode中下断点后当前行会高亮，或者实在受不了可以添加一带gutter icon，这个在左侧点击右键一般就可以显示出来了"
 " nmap <C-z> <action>(ToggleDistractionFreeMode)
 " nmap zm <action>(MaximizeEditorInSplit)
-vmap p "_dp
 
 
 
@@ -35,33 +35,59 @@ set incsearch
 set hlsearch
 set so=30
 set history=200
+set clipboard=unnamed
+set clipboard=ideaputset ideajoinset ideaput
 
 
 inoremap <c-j> <Esc>:action MoveStatementDown<CR>i
 inoremap <c-k> <Esc>:action MoveStatementUp<CR>i
+vnoremap <c-j> :action MoveStatementDown<CR>
+vnoremap <c-k> :action MoveStatementUp<CR>
 
-vnoremap J :action MoveStatementDown<CR>
-vnoremap K :action MoveStatementUp<CR>
-nmap <C-t> <action>(ActivateTerminalToolWindow)
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <A-h> <Left>
+inoremap <A-j> <Down>
+inoremap <A-k> <Up>
+inoremap <A-l> <Right>
 
 " zip
 nmap zO <action>(ExpandAllRegions)
 nmap zC <action>(CollapseAllRegions)
+
+map Y y$
+map D d$
+nmap <C-i> <action>(ShowIntentionActions)
 
 " = NERDTree =====================================
 " 注意，NERDTree在文件界面可以使用q来退出"
 set NERDTree
 let g:NERDTreeMapOpenVSplit='v'
 let g:NERDTreeMapOpenSplit='h'
+let g:WhichKeyDesc_Assist= ", Assist"
+let g:WhichKeyDesc_Assist_Show_NERDTree= ",e Show NERDTree"
 nmap ,e :NERDTree<CR>
+let g:WhichKeyDesc_Assist_Close_NERDTree= ",c Close NERDTree"
 nmap ,c :NERDTreeClose<CR>
 
-nmap ,v :e ~/.config/ideavim/ideavimrc<CR>
-nmap ,r <action>(IdeaVim.ReloadVimRc.reload)
+let g:WhichKeyDesc_Assist_Edit_IdeaVimRc= ",v Edit IdeaVimRc"
+nmap ,ve :e ~/.config/ideavim/ideavimrc<CR>
+let g:WhichKeyDesc_Assist_Reload_IdeaVimRc= ",r Reload IdeaVimRc"
+nmap ,vr <action>(IdeaVim.ReloadVimRc.reload)
+nmap ,f :NERDTreeFind<CR>
+let g:WhichKeyDesc_Assist_QuitEditor= ",q Close"
+nmap ,q <action>(CloseContent)
+let g:WhichKeyDesc_Assist_SaveAll= ",w SaveAll"
+nmap ,w <action>(SaveAll)
+let g:WhichKeyDesc_Assist_Copy= ",y Yank"
+nmap ,y "+y
+vmap ,y "+y
+let g:WhichKeyDesc_Assist_Paste= ",p Paste"
+nmap ,p "+p
+vmap ,p "+p
 
-nmap ,d <action>(ToggleDistractionFreeMode)
-nmap ,f <action>(ToggleFullScreen)
-
+nmap zd <action>(ToggleDistractionFreeMode)
+nmap zf <action>(ToggleFullScreen)
 " 不知道为啥不起作用
 " let g:NERDTreeMapActivateNode='l'
 
@@ -71,111 +97,185 @@ nmap ,f <action>(ToggleFullScreen)
 nmap <SPACE> <Nop>
 let mapleader=" "
 set which-key
-set notimeout
+set timeoutlen=5000
+nmap ;f <action>(GotoFile)
+nmap ;c <action>(GotoClass)
+nmap ;s <action>(GotoSymbol)
+nmap ;a <action>(GotoAction)
+
 
 " search
 let g:WhichKeyDesc_Search = "<leader>s Search"
 let g:WhichKeyDesc_Search_NoHighlight = "<leader>sc NoHighLight"
-nmap <leader>sc :noh<CR>
+nmap <leader>sc :nohl<CR>
+let g:WhichKeyDesc_Search_Find= "<leader>sf Find"
 nmap <leader>sf <action>(Find)
-nmap <leader>sr <action>(Replace)
+let g:WhichKeyDesc_Search_FindInPath= "<leader>sF FindInPath"
 nmap <leader>sF <action>(FindInPath)
+let g:WhichKeyDesc_Search_Replace= "<leader>s Replace"
+nmap <leader>sr <action>(Replace)
+let g:WhichKeyDesc_Search_ReplaceInPath= "<leader>sR ReplaceInPat"
 nmap <leader>sR <action>(ReplaceInPath)
 
 
 " file
-let g:WhichKeyDesc_File = "<leader>f File"
+let g:WhichKeyDesc_File = "<leader>f FileOrFind"
 let g:WhichKeyDesc_File_RecentFiles = "<leader>fr RecentFiles"
 nmap <leader>fr <action>(RecentFiles)
 let g:WhichKeyDesc_File_Switcher = "<leader>fb Switcher"
-nmap <leader>fb <action>(Switcher)
+nmap <leader>fb <action>(Switcher
 let g:WhichKeyDesc_File_RecentLocations = "<leader>fl RecentLocations"
 nmap <leader>fl <action>(RecentLocations)
-let g:WhichKeyDesc_File_GotoFile = "<leader>ff GotoFile"
-nmap <leader>ff <action>(GotoFile)
-let g:WhichKeyDesc_File_GotoClass = "<leader>fc GotoClass"
-nmap <leader>fc <action>(GotoClass)
-let g:WhichKeyDesc_File_GotoSymbol= "<leader>fc GotoSymbol"
-nmap <leader>fs <action>(GotoSymbol)
-let g:WhichKeyDesc_File_GotoAction = "<leader>fc GotoAction"
-nmap <leader>fa <action>(GotoAction)
-let g:WhichKeyDesc_File_OpenNERDTree = "<leader>ft OpenNERDTree"
-nmap <leader>ft :NERDTree<CR>
-let g:WhichKeyDesc_File_CloseNERDTree = "<leader>fT CloseNERDTree"
-nmap <leader>fT :NERDTreeClose<CR>
+
+nmap <leader>fn <action>(Kotlin.NewFile)
 
 " easymotion
-map s <Plug>(easymotion-s2)
-nmap <leader>dj d<Plug>(easymotion-j)
-nmap <leader>dk d<Plug>(easymotion-k)
-nmap <leader>vj v<Plug>(easymotion-j)
-nmap <leader>vk v<Plug>(easymotion-k)
-nmap <leader>yj y<Plug>(easymotion-j)
-nmap <leader>yk y<Plug>(easymotion-k)
+" map s <Plug>(easymotion-s2)
+" nmap <leader>dj d<Plug>(easymotion-j)
+" nmap <leader>dk d<Plug>(easymotion-k)
+" nmap <leader>vj v<Plug>(easymotion-j)
+" nmap <leader>vk v<Plug>(easymotion-k)
+" nmap <leader>yj y<Plug>(easymotion-j)
+" nmap <leader>yk y<Plug>(easymotion-k)
+
 
 " navigation
+" nmap <CR><CR> <action>(GotoPreviousError)
+
+let g:WhichKeyDesc_Navigation = "g Navigation"
+let g:WhichKeyDesc_Navigation_LastChange = "ga Goto File Last Change Location"
 nmap ga '.
-nmap gd <action>(GotoDeclaration)
-nmap gb <action>(GotoTypeDeclaration)
-nmap ge <action>(GotoNextError)
-nmap gE <action>(GotoPreviousError)
+let g:WhichKeyDesc_Navigation_LastChange = "gi Goto Implementation"
 nmap gi <action>(GotoImplementation)
-nmap gs <action>(GotoSuperMethod)
+" 默认 gD 和 gd 是 ShowUsages
+" nmap gb <action>(GotoTypeDeclaration)
+" nmap gs <action>(GotoSuperMethod)
+" nmap gc <action>(JumpToLastChange)
+" nmap gC <action>(JumpToNextChange)
+" nmap gl <action>(ShowErrorDescription)
+let g:WhichKeyDesc_Navigation_Test= "gi Goto Test"
 nmap gt <action>(GotoTest)
-nmap gc <action>(JumpToLastChange)
-nmap gC <action>(JumpToNextChange)
-nmap gl <action>(ShowErrorDescription)
-nmap gm <action>(MethodDown)
-nmap gM <action>(MethodUp)
 
-" tab
-nmap J :tabN<CR>
-nmap K :tabn<CR>
-nmap tl <action>(MoveTabRight)
-nmap tj <action>(MoveTabDown)
-nmap tm <action>(MoveEditorToOppositeTabGroup)
-nmap tr <action>(ReopenClosedTab)
-nmap to <action>(OpenEditorInOppositeTabGroup)
-" nmap tc <action>(CloseContent)
-nmap tc <action>(CloseAllEditorsButActive)
+nmap ge <action>(GotoPreviousError)
 
-" window
-let g:WhichKeyDesc_Windows = "<leader>w Windows"
+nmap [[ <action>(MethodUp)
+nmap ]] <action>(MethodDown)
+
+let g:WhichKeyDesc_Tab= "<leader>t Tab"
+let g:WhichKeyDesc_Tab_MoveTabRight="<leader>tl MoveTabRight"
+nmap <leader>tl <action>(MoveTabRight)
+let g:WhichKeyDesc_Tab_MoveTabDown="<leader>tj MoveTabDown"
+nmap <leader>tj <action>(MoveTabDown)
+let g:WhichKeyDesc_Tab_MoveEditorToOppositeTabGroup="<leader>tm MoveEditorToOppositeTabGroup"
+nmap <leader>tm <action>(MoveEditorToOppositeTabGroup)
+" nmap <leader>tr <action>(ReopenClosedTab)
+" nmap <leader>to <action>(OpenEditorInOppositeTabGroup)
+let g:WhichKeyDesc_Tab_CloseAllEditorsButActive="<leader>tc CloseAllEditorsButActive"
+nmap <leader>tc <action>(CloseAllEditorsButActive)
+nmap <leader>th <action>(HideAllWindows) \| <action>(CloseActiveTab)
+let g:WhichKeyDesc_Tab_Close_ALL= "<leader>to Hide All Windows"
+nmap <leader>to <action>(UnsplitAll) \| <action>(HideAllWindows) \| <action>(CloseActiveTab)
+let g:WhichKeyDesc_Tab_Close_ALL= "<leader>tn EditSourceInNewWindow"
+nmap <leader>tn <action>(EditSourceInNewWindow)
+" tool window
+let g:WhichKeyDesc_Windows = "<leader>w Tool Windows"
+let g:WhichKeyDesc_Windows_ActivateTerminalToolWindow = "<leader>wt Terminal Tool Window"
+nmap <leader>wt <action>(ActivateTerminalToolWindow)
+let g:WhichKeyDesc_Windows_ActivateCommitToolWindow= "<leader>wc Commit Tool Window"
 nmap <leader>wc <action>(ActivateCommitToolWindow)
+let g:WhichKeyDesc_Windows_ActivateBuildToolWindow= "<leader>wb Build Tool Window"
+nmap <leader>wb <action>(ActivateBuildToolWindow)
+let g:WhichKeyDesc_Windows_ActivateDebugToolWindow= "<leader>wd Debug Tool Window"
 nmap <leader>wd <action>(ActivateDebugToolWindow)
+let g:WhichKeyDesc_Windows_ActivateRunToolWindow= "<leader>wr Run Tool Window"
 nmap <leader>wr <action>(ActivateRunToolWindow)
-nmap <leader>wg <action>(ActivateVersionControlToolWindow)
+let g:WhichKeyDesc_Windows_ActivateVersionControlToolWindow= "<leader>wv Version Control Tool Window"
+nmap <leader>wv <action>(ActivateVersionControlToolWindow)
+let g:WhichKeyDesc_Windows_ActivateFavoritesToolWindow= "<leader>wf Favorites Tool Window"
 nmap <leader>wf <action>(ActivateFavoritesToolWindow)
-nmap <leader>wo <action>(UnsplitAll) \| <action>(HideAllWindows)
-nmap <leader>we <action>(ActivateAndroidEmulatorToolWindow)
+let g:WhichKeyDesc_Windows_ActivateProjectToolWindow= "<leader>wp Problems Tool Window"
+nmap <leader>wp <action>(ActivateProblemsViewToolWindow)
+let g:WhichKeyDesc_Windows_ActivateStructureToolWindow= "<leader>ws Structure Tool Window"
+nmap <leader>ws <action>(ActivateStructureToolWindow)
+let g:WhichKeyDesc_Windows_ActivateHierarchyToolWindow= "<leader>wh Hierarchy Tool Window"
+nmap <leader>wh <action>(ActivateHierarchyToolWindow)
+nmap <leader>wl <action>(ActivateLogcatToolWindow)
+
+if &ide =~? 'Android Studio'
+    let g:WhichKeyDesc_Windows_ActivateAndroidEmulatorToolWindow= "<leader>we ActivateAndroidEmulatorToolWindow"
+    nmap <leader>we <action>(ActivateAndroidEmulatorToolWindow)
+endif
 
 nmap <A-h> <action>(StretchSplitToLeft)
 nmap <A-j> <action>(StretchSplitToBottom)
 nmap <A-k> <action>(StretchSplitToTop)
 nmap <A-l> <action>(StretchSplitToRight)
-cmap term action ActivateTerminalToolWindow
 
 " lsp action
-let g:WhichKeyDesc_Bookmarks= "<leader>l LSP"
+let g:WhichKeyDesc_LSP= "<leader>l LSP"
+let g:WhichKeyDesc_LSP_FindUsages= "<leader>lu FindUsages"
 nmap <leader>lu <action>(FindUsages)
-nmap <leader>lr <action>(RenameElement)
-nmap <leader>li <action>(IntroduceVariable)
-vmap <leader>li <action>(IntroduceVariable)
-" nnoremap <leader>lj <action>(QuickJavaDoc)
+let g:WhichKeyDesc_LSP_RenameElement= "<leader>lr RenameElement"
+nmap <leader>lr. <action>(RenameElement)
+let g:WhichKeyDesc_LSP_FileStructurePopup= "<leader>lf FileStructurePopup"
 nmap <leader>lf <action>(FileStructurePopup)
-nmap <leader>le <action>(ShowErrorDescription)
+" let g:WhichKeyDesc_LSP_ShowErrorDescription= "<leader>le ShowErrorDescription"
+" nmap <leader>le <action>(ShowErrorDescription)
+
+" let g:WhichKeyDesc_LSP_RefactoringsQuickListPopupAction = "<leader>lt "
+
+let g:WhichKeyDesc_LSP_ManPage= "<leader>lk Float ManPage"
+nmap <leader>lk <action>(QuickJavaDoc)
+let g:WhichKeyDesc_LSP_Hierarchy = "<leader>lh Hierarchy"
+let g:WhichKeyDesc_LSP_Hierarchy_Call = "<leader>lhc Call Hierarchy"
+nmap <leader>lhc <action>(CallHierarchy)
+let g:WhichKeyDesc_LSP_Hierarchy_Method = "<leader>lhm Method Hierarchy"
+nmap <leader>lhm <action>(MethodHierarchy)
+let g:WhichKeyDesc_LSP_Hierarchy_Type= "<leader>lhm Type Hierarchy"
+nmap <leader>lht <action>(TypeHierarchy)
+
+
+let g:WhichKeyDesc_ReformatCode_And_OptimizeImports= "== ReformatCode And OptimizeImports"
 nmap == :action ReformatCode \| action OptimizeImports<CR>
 
+let g:WhichKeyDesc_LSP_Introduce ="<leader>li Introduce"
+let g:WhichKeyDesc_LSP_Introduce_Variable= "<leader>liv Introduce Variable"
+nmap <leader>liv <action>(IntroduceVariable)
+vmap <leader>liv <action>(IntroduceVariable)
+let g:WhichKeyDesc_LSP_Introduce_Field= "<leader>lif Introduce Field"
+nmap <leader>lif <action>(IntroduceField)
+vmap <leader>lif <action>(IntroduceField)
+let g:WhichKeyDesc_LSP_Introduce_Const = "<leader>lic Introduce Const"
+nmap <leader>lic <action>(IntroduceConstant)
+vmap <leader>lic <action>(IntroduceConstant)
+let g:WhichKeyDesc_LSP_Introduce_Parameter= "<leader>lip Introduce Parameter"
+nmap <leader>lip <action>(IntroduceParameter)
+vmap <leader>lip <action>(IntroduceParameter)
+
+nmap <leader>em <action>(ExtractMethod)
+vmap <leader>em <action>(ExtractMethod)
+nmap <leader>ef <action>(ExtractFunction)
+vmap <leader>ef <action>(ExtractFunction)
+
+
 " version control
+let g:WhichKeyDesc_VersionControl= "<leader>v VersionControl"
+let g:WhichKeyDesc_VersionControl_ContextMenu= "<leader>vv ContextMenu"
 noremap <leader>vv :action Git.ContextMenu<CR>
+let g:WhichKeyDesc_VersionControl_RollbackChangedLines= "<leader>vr RollbackChangedLines"
+nmap <leader>vr <action>(Vcs.RollbackChangedLines)
 nnoremap <leader>vc :action Git.CompareWithBranch<CR>
 
 " debugger
+let g:WhichKeyDesc_Debugger= "<leader>d Debugger"
 noremap <leader>de :action QuickEvaluateExpression<CR>
 noremap <leader>dE :action EvaluateExpression<CR>
 " vnoremap <leader>di :action Debugger.AddInlineWatch<CR>
+let g:WhichKeyDesc_Debugger_ToggleLineBreakpoint= "<leader>dt ToggleLineBreakpoint"
 nnoremap <leader>dt :action ToggleLineBreakpoint<CR>
+let g:WhichKeyDesc_Debugger_RemoveAllBreakpointsInFile= "<leader>dc RemoveAllBreakpointsInFile"
 nnoremap <leader>dc :action Debugger.RemoveAllBreakpointsInFile<CR>
+let g:WhichKeyDesc_Debugger_RemoveAllBreakpoints= "<leader>dC RemoveAllBreakpoints"
 nnoremap <leader>dC :action Debugger.RemoveAllBreakpoints<CR>
 nnoremap <leader>dm :action XDebugger.MuteBreakpoints<CR>
 nnoremap <leader>df :action ForceRunToCursor<CR>
@@ -184,33 +284,54 @@ nnoremap <leader>df :action ForceRunToCursor<CR>
 let g:WhichKeyDesc_Bookmarks= "<leader>b Bookmarks"
 nnoremap <leader>bb :action Bookmarks<CR>
 nnoremap <leader>bs :action ShowBookmarks<CR>
+let g:WhichKeyDesc_Bookmarks_ToggleBookmark= "<leader>bt ToggleBookmark"
 nnoremap <leader>bt :action ToggleBookmark<CR>
 nnoremap <leader>bf :action AddToFavorites<CR>
 " 创建项目级别的bookmark
-nmap ma mA
-nmap 'a 'A
-nmap ms mS
-nmap 's 'S
-nmap md mD
-nmap 'd 'D
-nmap mf mF
-nmap 'f 'F
+
+let g:WhichKeyDesc_Project="<leader>k Project"
+let g:WhichKeyDesc_Project_Update="<leader>ku Update Project"
+nmap <leader>ku <action>(Vcs.UpdateProject)
+let g:WhichKeyDesc_Project_Quit= "<leader>kq Quit IDE"
+nmap <leader>kq <action>(Exit)
+if &ide =~? 'Android Studio'
+    let g:WhichKeyDesc_Project_Sync="<leader>ks Sync Project"
+    nmap <leader>ks <action>(Android.SyncProject)
+    let g:WhichKeyDesc_Project_Restart="<leader>kr Restart Ide"
+    nmap <leader>kr <action>(RestartIde)
+endif
+
+" nmap m小写字母 的标记制作用于当前的buffer，即当前的tab"
+" nmap ma mA
+" nmap 'a 'A
+" nmap ms mS
+" nmap 's 'S
+" nmap md mD
+" nmap 'd 'D
+" nmap mf mF
+" nmap 'f 'F
 
 " run
-nmap \cd <action>(ChooseDebugConfiguration)
-nmap \cr <action>(ChooseRunConfiguration)
-nmap \d <action>(Debug)
-nmap \dc <action>(DebugClass)
-nmap \rc <action>(RunClass)
-nmap \r <action>(Run)
-nmap \R <action>(Rerun)
-nmap \s <action>(Stop)
-nmap \a <action>(RunAnything)
+" nmap \cr <action>(ChooseRunConfiguration)
+" nmap \cd <action>(ChooseDebugConfiguration)
 
 " =====================================
 " = Use \ as the build prefix==========
 " =====================================
-
-let g:WhichKeyDesc_Quit= "<leader>q Quit"
-nmap <leader>qq <action>(Exit)
-nmap <leader>qr <action>(RestartIde)
+" nmap \k <action>()
+let g:WhichKeyDesc_RunDebugAndTest="\\ Run Debug and Test Actions"
+let g:WhichKeyDesc_RunDebugAndTest_Choose="\\c Choose Configuration"
+let g:WhichKeyDesc_RunDebugAndTest_ChooseRunConfiguration="\\cr Run Configuration"
+nmap \cr <action>(ChooseRunConfiguration)
+let g:WhichKeyDesc_RunDebugAndTest_ChooseRunConfiguration="\\cd Debug Configuration"
+nmap \cd <action>(ChooseDebugConfiguration)
+let g:WhichKeyDesc_RunDebugAndTest_Debug="\\d Debug"
+nmap \d <action>(Debug)
+let g:WhichKeyDesc_RunDebugAndTest_Run="\\r Run"
+nmap \r <action>(Run)
+let g:WhichKeyDesc_RunDebugAndTest_Rerun="\\R Run"
+nmap \R <action>(Rerun)
+let g:WhichKeyDesc_RunDebugAndTest_Stop="\\s Stop"
+nmap \s <action>(Stop)
+let g:WhichKeyDesc_RunDebugAndTest_Stop="\\t TestTreePopupMenu"
+nmap \t <action>(TestTreePopupMenu)

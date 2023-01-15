@@ -74,13 +74,13 @@ window:
   #title: Alacritty
   # Allow terminal applications to change Alacritty's window title.
   #dynamic_title: true
-  # Window class (Linux/BSD only):
+  # Window class ({{ .chezmoi.kernel.ostype }}/BSD only):
   #class:
     # Application instance name
     #instance: Alacritty
     # General application class
     #general: Alacritty
-  # GTK theme variant (Linux/BSD only)
+  # GTK theme variant ({{ .chezmoi.kernel.ostype }}/BSD only)
   #
   # Override the variant of the GTK theme. Commonly supported values are `dark`
   # and `light`. Set this to `None` to use the default theme variant.
@@ -99,7 +99,7 @@ font:
     #
     # Default:
     #   - (macOS) Menlo
-    #   - (Linux/BSD) monospace
+    #   - ({{ .chezmoi.kernel.ostype }}/BSD) monospace
     #   - (Windows) Consolas
     family: JetBrainsMono Nerd Font
     # The `style` can be specified to pick a specific face.
@@ -171,7 +171,7 @@ colors:
     matches:
       foreground: CellBackground
       background: '#88c0d0'
-    bar:
+  fotter_bar:
       background: '#434c5e'
       foreground: '#d8dee9'
   normal:
@@ -287,7 +287,7 @@ colors:
 #
 # Default:
 #   - (macOS) /bin/bash --login
-#   - (Linux/BSD) user login shell
+#   - ({{ .chezmoi.kernel.ostype }}/BSD) user login shell
 #   - (Windows) powershell
 shell:
   program: /bin/fish
@@ -543,7 +543,7 @@ shell:
 #   - ToggleSimpleFullscreen
 #       Enter fullscreen without occupying another space.
 #
-# - Linux/BSD exclusive actions:
+# - {{ .chezmoi.kernel.ostype }}/BSD exclusive actions:
 #
 #   - CopySelection
 #       Copy from the selection buffer.
@@ -661,7 +661,7 @@ shell:
   #- { key: Down,                  mode: Search,     action: SearchHistoryNext     }
   #- { key: Return,                mode: Search|~Vi, action: SearchFocusNext       }
   #- { key: Return, mods: Shift,   mode: Search|~Vi, action: SearchFocusPrevious   }
-  # (Windows, Linux, and BSD only)
+  # (Windows, {{ .chezmoi.kernel.ostype }}, and BSD only)
   #- { key: V,              mods: Control|Shift, mode: ~Vi,        action: Paste            }
   #- { key: C,              mods: Control|Shift,                   action: Copy             }
   #- { key: F,              mods: Control|Shift, mode: ~Search,    action: SearchForward    }
