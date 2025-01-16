@@ -1,0 +1,16 @@
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+encryption = "gpg"
+[gpg]
+recipient = "F78172561298755A"
+
+[data]
+osid = {{ $osid | quote }}
+name = "MXArcher Lee"
+email = "hi@mxarcher.com"
+signingkey = "F78172561298755A"
+proxy_host = "127.0.0.1:7890"
+
