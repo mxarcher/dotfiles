@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=clash-nyanpasu
+Comment=clash-nyanpasustartup script
+Exec=/usr/bin/clash-nyanpasu 
+StartupNotify=false
+Terminal=false
