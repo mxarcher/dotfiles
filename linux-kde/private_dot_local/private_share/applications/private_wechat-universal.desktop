@@ -1,0 +1,26 @@
+[Desktop Entry]
+Actions=quit;
+Categories=Network;InstantMessaging;Chat;
+Comment=WeChat Universal
+Exec=env 'GTK_IM_MODULE=fcitx;' 'QT_IM_MODULE=fcitx;' XMODIFIERS=@im=fcitx /usr/lib/wechat-universal/start.sh %u
+Icon=wechat-universal
+Keywords=wechat;weixin;we;w;
+Name=WeChat (Universal)
+NoDisplay=false
+Path=
+PrefersNonDefaultGPU=false
+SingleMainWindow=true
+StartupNotify=true
+StartupWMClass=wechat
+Terminal=false
+TerminalOptions=
+TryExec=/usr/lib/wechat-universal/start.sh
+Type=Application
+X-GNOME-SingleWindow=true
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+
+[Desktop Action quit]
+Exec=/usr/lib/wechat-universal/stop.sh
+Icon=application-exit
+Name=Quit WeChat

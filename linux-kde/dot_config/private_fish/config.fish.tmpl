@@ -10,9 +10,9 @@ set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
 # proxy
 
-set -x http_proxy "http://127.0.0.1:20171"
-set -x https_proxy "http://127.0.0.1:20171"
-set -x all_proxy "http://127.0.0.1:20171"
+set -x http_proxy "{{ .proxy_host }}"
+set -x https_proxy "{{ .proxy_host }}"
+set -x all_proxy "{{ .proxy_host }}"
 
 # set -a fish_user_paths ~/.local/bin
 

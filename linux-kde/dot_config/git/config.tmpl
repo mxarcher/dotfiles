@@ -6,9 +6,9 @@
 [init]
 	defaultBranch = main
 [https]
-	proxy = socks5://{{ .proxy_host }}
+	proxy = {{ .proxy_host }}
 [http]
-	proxy = socks5://{{ .proxy_host }}
+	proxy = {{ .proxy_host }}
 [commit]
 	gpgsign = true
 [alias]
